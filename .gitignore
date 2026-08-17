@@ -1,0 +1,35 @@
+# C/C++
+build/
+out/
+*.o
+*.a
+*.so
+*.bpf.o
+
+# Kernel/build artifacts
+*.ko
+*.mod
+*.mod.c
+*.cmd
+
+# ML
+ml/data/
+ml/models/*.tmp
+*.pt
+*.pth
+
+# Benchmarks
+results/raw/
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+
+# Editors
+.vscode/
+.idea/
+
+# Misc
+*.log
+.DS_Store
