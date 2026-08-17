@@ -4,6 +4,7 @@
 
 The development environment should look like this:
 
+
 ```text
 Windows laptop
 │
