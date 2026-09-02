@@ -123,27 +123,14 @@ Press `Ctrl-a`, release, then press `x`.
 
 ## 7. Run xv6 Tests
 
-The plain MIT `xv6-riscv` repository may not include a `make grade` target.
-That is normal. Boot xv6 and run its user tests from the xv6 shell instead:
+Inside the `xv6-riscv` directory:
 
 ```sh
-make qemu
-```
-
-At the xv6 `$` prompt, run:
-
-```sh
-usertests
+make grade
 ```
 
 This may take a while. The initial goal is not perfection yet; the key milestone
-is that unmodified xv6 builds, boots, and can run basic user programs.
-
-For deterministic scheduler experiments later, boot with one CPU:
-
-```sh
-make CPUS=1 qemu
-```
+is that unmodified xv6 builds and boots.
 
 ## 8. Open the Code From Windows VS Code
 

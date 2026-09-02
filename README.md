@@ -10,7 +10,6 @@ Start here:
 
 - [Windows xv6 setup](docs/windows-xv6-setup.md)
 - [xv6 ML scheduler plan](docs/xv6-ml-scheduler-plan.md)
-- [Page management TODO](docs/page-management-todo.md)
 
 Recommended next milestone:
 
