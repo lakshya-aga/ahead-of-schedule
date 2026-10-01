@@ -106,7 +106,10 @@ extern uint64 sys_sync(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
+extern uint64 sys_getstats(void);
+
 static uint64 (*syscalls[])(void) = {
+  [SYS_getstats] sys_getstats,
   // clang-format off
   [SYS_fork]    = sys_fork,
   [SYS_exit]    = sys_exit,

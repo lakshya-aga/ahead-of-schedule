@@ -110,3 +110,41 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// Read-only snapshot. Require an already-resident output buffer so taking
+// a snapshot does not itself lazily allocate a destination page.
+uint64
+sys_getstats(void)
+{
+  uint64 dst;
+  argaddr(0, &dst);
+  struct proc *p = myproc();
+
+  if (dst > p->sz || sizeof(struct benchstats) > p->sz - dst)
+    return -1;
+
+  uint64 end = dst + sizeof(struct benchstats);
+  for (uint64 va = PGROUNDDOWN(dst); va < end; va += PGSIZE) {
+    pte_t *pte = walk(p->pagetable, va, 0);
+    if (pte == 0 ||
+        (*pte & (PTE_V | PTE_U | PTE_W)) != (PTE_V | PTE_U | PTE_W))
+      return -1;
+  }
+
+  struct benchstats s = p->bstats;
+  s.virtual_bytes = p->sz;
+  s.resident_pages = 0;
+  for (uint64 va = 0; va < p->sz; va += PGSIZE) {
+    pte_t *pte = walk(p->pagetable, va, 0);
+    if (pte && (*pte & (PTE_V | PTE_U)) == (PTE_V | PTE_U))
+      s.resident_pages++;
+  }
+
+  acquire(&tickslock);
+  s.ticks = ticks;
+  release(&tickslock);
+
+  if (copyout(p->pagetable, p->sz, dst, (char *)&s, sizeof(s)) < 0)
+    return -1;
+  return 0;
+}

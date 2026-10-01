@@ -33,3 +33,5 @@ __pycache__/
 # Misc
 *.log
 .DS_Store
+
+/xv6-riscv/stats-backup-*/

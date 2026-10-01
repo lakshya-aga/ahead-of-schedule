@@ -51,6 +51,14 @@ usertrap(void)
   // save user program counter.
   p->trapframe->epc = r_sepc();
 
+  uint64 fault_cause = r_scause();
+  if (fault_cause == 12)
+    p->bstats.instruction_faults++;
+  else if (fault_cause == 13)
+    p->bstats.load_faults++;
+  else if (fault_cause == 15)
+    p->bstats.store_faults++;
+
   if (r_scause() == 8) {
     // system call
 

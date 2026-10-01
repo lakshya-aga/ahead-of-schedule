@@ -7,9 +7,9 @@
 - [x] Clone `xv6-riscv`.
 - [x] Build xv6.
 - [x] Boot xv6 in QEMU.
-- [ ] Boot xv6 with one CPU using `make CPUS=1 qemu`.
-- [ ] Run `usertests` once on unmodified xv6.
-- [ ] Save the unmodified xv6 commit hash.
+- [x] Boot xv6 with one CPU using `make CPUS=1 qemu`.
+- [x] Run `usertests` once on unmodified xv6.
+- [x] Save the unmodified xv6 commit hash.
 
 ## Phase 1: Understand the Read Path
 

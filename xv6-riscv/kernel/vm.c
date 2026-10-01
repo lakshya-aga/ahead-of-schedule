@@ -166,6 +166,9 @@ mappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa, int perm)
     if (*pte & PTE_V)
       panic("mappages: remap");
     *pte = PA2PTE(pa) | perm | PTE_V;
+    struct proc *owner = myproc();
+    if ((perm & PTE_U) && owner && owner->pagetable == pagetable)
+      owner->bstats.pages_mapped++;
     if (a == last)
       break;
     a += PGSIZE;
@@ -206,6 +209,9 @@ uvmunmap(pagetable_t pagetable, uint64 va, uint64 npages, int do_free)
       continue;
     if (do_free) {
       uint64 pa = PTE2PA(*pte);
+      struct proc *owner = myproc();
+      if ((*pte & PTE_U) && owner && owner->pagetable == pagetable)
+        owner->bstats.pages_freed++;
       kfree((void *)pa);
     }
     *pte = 0;
